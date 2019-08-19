@@ -16,7 +16,7 @@ An extension to load [MathJax](https://www.mathjax.org) into Adapt.
 			"output/HTML-CSS"
 		]
 	},
-	"_src": "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"
+	"_src": "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"
 }
 ```
 * If this needs to be overridden, add the above to `config.json` and modify where required.
