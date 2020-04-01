@@ -8,15 +8,17 @@ An extension to load [MathJax](https://www.mathjax.org) into Adapt.
 ```json
 "_mathJax": {
 	"_inlineConfig": {
-		"extensions": [
-			"tex2jax.js"
-		],
-		"jax": [
-			"input/TeX",
-			"output/HTML-CSS"
-		]
+		"extensions": [ "tex2jax.js" ],
+		"jax": [ "input/TeX", "output/HTML-CSS" ],
+		"tex2jax": {
+			"inlineMath": [ [ "$", "$" ], [ "\\(", "\\)" ] ],
+			"displayMath": [ [ "$$", "$$" ], [ "\\[", "\\]" ] ],
+			"processEscapes": true
+		},
+		"TeX": { "extensions": [ "[mhchem]/mhchem.js" ]
 	},
-	"_src": "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+	"_src": "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML",
+	"_ext": "MathJax.Ajax.config.path['mhchem'] = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax-mhchem/3.3.2';"
 }
 ```
 * If this needs to be overridden, add the above to `config.json` and modify where required.
@@ -45,5 +47,6 @@ An extension to load [MathJax](https://www.mathjax.org) into Adapt.
 
 Attribute | Type | Description | Default
 --------- | ---- | ----------- | -------
-`_inlineConfig` | Object | In-line [configuration](http://docs.mathjax.org/en/latest/options/index.html#configuration) for MathJax | `{ "extensions": [ "tex2jax.js" ], "jax": [ "input/TeX", "output/HTML-CSS" ] }`
-`_src` | String | The URL to the copy of MathJax which should be loaded | `"//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"`
+`_inlineConfig` | Object | In-line [configuration](http://docs.mathjax.org/en/latest/options/index.html#configuration) for MathJax | `{		"extensions": [ "tex2jax.js" ],	"jax": [ "input/TeX", "output/HTML-CSS" ], "tex2jax": {	"inlineMath": [ [ "$", "$" ], [ "\\(", "\\)" ] ], "displayMath": [ [ "$$", "$$" ], [ "\\[", "\\]" ] ], "processEscapes": true }, "TeX": { "extensions": [ "[mhchem]/mhchem.js" ] }`
+`_src` | String | The URL to the copy of MathJax which should be loaded | `"//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"`
+`_ext` | String | The extension URL loading codes | `"MathJax.Ajax.config.path['mhchem'] = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax-mhchem/3.3.2';"`
