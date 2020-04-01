@@ -22,7 +22,17 @@
                     "jax": [
                       "input/TeX",
                       "output/HTML-CSS"
-                    ]
+                    ],
+                    "tex2jax": {
+                      "inlineMath": [ [ "$", "$" ], [ "\\(", "\\)" ] ],
+                      "displayMath": [ [ "$$", "$$" ], [ "\\[", "\\]" ] ],
+                      "processEscapes": true
+                    },
+		                "TeX": { 
+                      "extensions": [ 
+                        "[mhchem]/mhchem.js" 
+                        ]
+                    }
                   },
                   "title": "In-line config",
                   "inputType": {
@@ -33,10 +43,17 @@
                 },
                 "_src": {
                   "type": "string",
-                  "default": "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js",
+                  "default": "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML",
                   "title": "Source",
                   "inputType": "Text",
                   "help": "Enter the URL to the copy of MathJax which should be loaded"
+                },
+                "_ext": {
+                  "type": "string",
+                  "default": "MathJax.Ajax.config.path['mhchem'] = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax-mhchem/3.3.2';",
+                  "title": "Extensions",
+                  "inputType": "Text",
+                  "help": "Enter concatenated extension URLs."
                 }
               }
             }

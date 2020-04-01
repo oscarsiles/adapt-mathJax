@@ -31,13 +31,20 @@ define([ "core/js/adapt" ], function(Adapt) {
 		var config = Adapt.config.get("_mathJax");
 		var inlineConfig = config ? config._inlineConfig : {
 				"extensions": [ "tex2jax.js" ],
-				"jax": [ "input/TeX", "output/HTML-CSS" ]
+				"jax": [ "input/TeX", "output/HTML-CSS" ],
+				"tex2jax": {
+					"inlineMath": [ [ "$", "$" ], [ "\\(", "\\)" ] ],
+					"displayMath": [ [ "$$", "$$" ], [ "\\[", "\\]" ] ],
+					"processEscapes": true
+				},
+				"TeX": { "extensions": [ "[mhchem]/mhchem.js" ]}
 		};
 		var src = config ? config._src : "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML";
+		var ext = config ? config._ext : "MathJax.Ajax.config.path['mhchem'] = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax-mhchem/3.3.2';"
 
 		loadScript({ 
 			type: "text/x-mathjax-config",
-			text: "MathJax.Hub.Config(" + JSON.stringify(inlineConfig) + ");"
+			text: "MathJax.Hub.Config(" + JSON.stringify(inlineConfig) + ");\n" + ext
 		});
 
 		loadScript({ src: 'assets/mathJaxInit.js' }, function() {
