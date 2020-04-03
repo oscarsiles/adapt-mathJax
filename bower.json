@@ -1,6 +1,6 @@
 {
 	"name": "adapt-mathJax",
-	"version": "0.2.7",
+	"version": "0.3.0",
 	"framework": ">=1.1.2",
 	"displayName": "MathJax",
 	"extension": "mathJax",
@@ -12,8 +12,9 @@
 		"adapt-extension"
 	],
 	"authors": [
-		"Tom Greenfield"
+		"Tom Greenfield",
+		"Oscar Siles Brügge"
 	],
 	"license": "GPL-3.0",
-	"homepage": "https://github.com/cgkineo/adapt-mathJax"
+	"homepage": "https://github.com/oscarsiles/adapt-mathJax"
 }

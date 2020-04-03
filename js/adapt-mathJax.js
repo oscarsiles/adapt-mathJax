@@ -30,28 +30,34 @@ define([ "core/js/adapt" ], function(Adapt) {
 
 		var config = Adapt.config.get("_mathJax");
 		var inlineConfig = config ? config._inlineConfig : {
-				"extensions": [ "tex2jax.js" ],
-				"jax": [ "input/TeX", "output/HTML-CSS" ],
-				"tex2jax": {
-					"inlineMath": [ [ "$", "$" ], [ "\\(", "\\)" ] ],
-					"displayMath": [ [ "$$", "$$" ], [ "\\[", "\\]" ] ],
-					"processEscapes": true
+			"tex": {
+				"inlineMath": [ [ "$", "$" ], [ "\\(", "\\)" ] ],
+				"displayMath": [ [ "$$", "$$" ], [ "\\[", "\\]" ] ],
+				"processEscapes": true,
+				"autoload": {
+				"color": [],
+				"colorV2": ["color"]
 				},
-				"TeX": { "extensions": [ "[mhchem]/mhchem.js" ]}
+				"packages": {"[+]": ["noerrors"]}
+			},
+			"options": {
+				"ignoreHtmlClass": "tex2jax_ignore",
+				"processHtmlClass": "tex2jax_process"
+			},
+			"loader": {
+				"load": ["input/asciimath", "[tex]/noerrors"]
+			}
 		};
-		var src = config ? config._src : "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML";
-		var ext = config ? config._ext : "MathJax.Ajax.config.path['mhchem'] = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax-mhchem/3.3.2';"
+		var src = config ? config._src : "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
 
-		loadScript({ 
-			type: "text/x-mathjax-config",
-			text: "MathJax.Hub.Config(" + JSON.stringify(inlineConfig) + ");\n" + ext
+		var mathjaxConfig = "window.MathJax = " + JSON.stringify(inlineConfig) + ";"
+
+		loadScript({ text: mathjaxConfig });
+
+		loadScript({ src: src }, function() {
+			Adapt.wait ? Adapt.wait.end() : Adapt.trigger("plugin:endWait");
 		});
 
-		loadScript({ src: 'assets/mathJaxInit.js' }, function() {
-			loadScript({ src: src }, function() {
-				Adapt.wait ? Adapt.wait.end() : Adapt.trigger("plugin:endWait");
-			});
-		});
 	}
 
 	function onProcessMath() {
@@ -67,11 +73,13 @@ define([ "core/js/adapt" ], function(Adapt) {
 		$(".loading").show();
 
 		function checkForMathJax() {
-			if (!window.MathJax || !window.MathJax.Hub) {
+			if (!window.MathJax || !window.MathJax.version) {
 				window.setTimeout(checkForMathJax, 200);
 			} else {
-				var Hub = window.MathJax.Hub;
-				Hub.Queue([ "Typeset", Hub, view.el ]);
+				Adapt.trigger("mathJax:processMath");
+				MathJax.typesetPromise().then(() => {
+					Adapt.trigger("mathJax:endProcess");
+				  }).catch((err) => console.log(err.message));
 			}
 		}
 
@@ -79,11 +87,7 @@ define([ "core/js/adapt" ], function(Adapt) {
 	}
 
 	function onPopupOpened($element) {
-		var Hub = window.MathJax.Hub;
-
-		if ($element) $element = $element[0];
-
-		Hub.Queue([ "Typeset", Hub, $element ]);
+		MathJax.typesetPromise().catch((err) => console.log(err.message));
 	}
 
 	Adapt.once("app:dataReady", setUpMathJax).on({
