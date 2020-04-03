@@ -8,17 +8,25 @@ An extension to load [MathJax](https://www.mathjax.org) into Adapt.
 ```json
 "_mathJax": {
 	"_inlineConfig": {
-		"extensions": [ "tex2jax.js" ],
-		"jax": [ "input/TeX", "output/HTML-CSS" ],
-		"tex2jax": {
+		"tex": {
 			"inlineMath": [ [ "$", "$" ], [ "\\(", "\\)" ] ],
 			"displayMath": [ [ "$$", "$$" ], [ "\\[", "\\]" ] ],
-			"processEscapes": true
+			"processEscapes": true,
+			"autoload": {
+			"color": [],
+			"colorV2": ["color"]
+			},
+			"packages": {"[+]": ["noerrors"]}
 		},
-		"TeX": { "extensions": [ "[mhchem]/mhchem.js" ]
+		"options": {
+			"ignoreHtmlClass": "tex2jax_ignore",
+			"processHtmlClass": "tex2jax_process"
+		},
+		"loader": {
+			"load": ["input/asciimath", "[tex]/noerrors"]
+		}
 	},
-	"_src": "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML",
-	"_ext": "MathJax.Ajax.config.path['mhchem'] = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax-mhchem/3.3.2';"
+	"_src": "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
 }
 ```
 * If this needs to be overridden, add the above to `config.json` and modify where required.
@@ -28,18 +36,21 @@ An extension to load [MathJax](https://www.mathjax.org) into Adapt.
 ### Usage
 
 * With the default configuation, equations are processed in LaTeX format.
-* In JSON, surround LaTeX equations with `\\(` and `\\)` for inline mode or `\\[` and `\\]` for display mode.
+* In JSON, surround LaTeX equations with `\\(` and `\\)` (or `$` on either side) for inline mode or `\\[` and `\\]` (or `$$` on either side) for display mode.
 * Example of inline mode:
 ```
 \\(x^n + y^n = z^n\\)
+$x^n + y^n = z^n$
 ```
 * Example of display mode (rendered in a separate block):
 ```
 \\[f(x) = \\frac{1}{1+x}\\]
+$$f(x) = \\frac{1}{1+x}$$
 ```
 * When directly editing in the authoring tool, backslashes do *not* have to be escaped with an additional backslash (`\`). The above 'inline mode' example would therefore be entered as:
 ```
 \(x^n + y^n = z^n\)
+$x^n + y^n = z^n$
 ```
 * The Adapt loading screen is shown while MathJax is processing.
 
@@ -47,6 +58,5 @@ An extension to load [MathJax](https://www.mathjax.org) into Adapt.
 
 Attribute | Type | Description | Default
 --------- | ---- | ----------- | -------
-`_inlineConfig` | Object | In-line [configuration](http://docs.mathjax.org/en/latest/options/index.html#configuration) for MathJax | `{		"extensions": [ "tex2jax.js" ],	"jax": [ "input/TeX", "output/HTML-CSS" ], "tex2jax": {	"inlineMath": [ [ "$", "$" ], [ "\\(", "\\)" ] ], "displayMath": [ [ "$$", "$$" ], [ "\\[", "\\]" ] ], "processEscapes": true }, "TeX": { "extensions": [ "[mhchem]/mhchem.js" ] }`
-`_src` | String | The URL to the copy of MathJax which should be loaded | `"//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"`
-`_ext` | String | The extension URL loading codes | `"MathJax.Ajax.config.path['mhchem'] = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax-mhchem/3.3.2';"`
+`_inlineConfig` | Object | In-line [configuration](http://docs.mathjax.org/en/latest/options/index.html#configuration) for MathJax | `{		"tex": { "inlineMath": [ [ "$", "$" ], [ "\\(", "\\)" ] ], "displayMath": [ [ "$$", "$$" ], [ "\\[", "\\]" ] ], "processEscapes": true,	"autoload": { "color": [], "colorV2": ["color"]	}, "packages": {"[+]": ["noerrors"]} }, "options": { "ignoreHtmlClass": "tex2jax_ignore", "processHtmlClass": "tex2jax_process"	}, "loader": { "load": ["input/asciimath", "[tex]/noerrors"] } }`
+`_src` | String | The URL to the copy of MathJax which should be loaded | `"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"`

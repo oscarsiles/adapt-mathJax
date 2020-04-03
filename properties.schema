@@ -16,22 +16,22 @@
                 "_inlineConfig": {
                   "type": "object",
                   "default": {
-                    "extensions": [
-                      "tex2jax.js"
-                    ],
-                    "jax": [
-                      "input/TeX",
-                      "output/HTML-CSS"
-                    ],
-                    "tex2jax": {
+                    "tex": {
                       "inlineMath": [ [ "$", "$" ], [ "\\(", "\\)" ] ],
                       "displayMath": [ [ "$$", "$$" ], [ "\\[", "\\]" ] ],
-                      "processEscapes": true
+                      "processEscapes": true,
+                      "autoload": {
+                        "color": [],
+                        "colorV2": ["color"]
+                      },
+                      "packages": {"[+]": ["noerrors"]}
                     },
-		                "TeX": { 
-                      "extensions": [ 
-                        "[mhchem]/mhchem.js" 
-                        ]
+                    "options": {
+                      "ignoreHtmlClass": "tex2jax_ignore",
+                      "processHtmlClass": "tex2jax_process"
+                    },
+                    "loader": {
+                      "load": ["input/asciimath", "[tex]/noerrors"]
                     }
                   },
                   "title": "In-line config",
@@ -43,17 +43,10 @@
                 },
                 "_src": {
                   "type": "string",
-                  "default": "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML",
+                  "default": "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
                   "title": "Source",
                   "inputType": "Text",
                   "help": "Enter the URL to the copy of MathJax which should be loaded"
-                },
-                "_ext": {
-                  "type": "string",
-                  "default": "MathJax.Ajax.config.path['mhchem'] = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax-mhchem/3.3.2';",
-                  "title": "Extensions",
-                  "inputType": "Text",
-                  "help": "Enter concatenated extension URLs."
                 }
               }
             }
