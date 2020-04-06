@@ -87,7 +87,9 @@ define([ "core/js/adapt" ], function(Adapt) {
 	}
 
 	function onPopupOpened($element) {
-		MathJax.typesetPromise().catch((err) => console.log(err.message));
+		if ($element) $element = $element[0];
+
+		MathJax.typesetPromise([$element]).catch((err) => console.log(err.message));
 	}
 
 	Adapt.once("app:dataReady", setUpMathJax).on({
