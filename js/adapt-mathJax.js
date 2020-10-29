@@ -50,6 +50,8 @@ define([ "core/js/adapt" ], function(Adapt) {
 		};
 		var src = config ? config._src : "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
 
+		if ( /^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {src.replace("-chtml", "-svg")}
+
 		var mathjaxConfig = "window.MathJax = " + JSON.stringify(inlineConfig) + ";"
 
 		loadScript({ text: mathjaxConfig });
