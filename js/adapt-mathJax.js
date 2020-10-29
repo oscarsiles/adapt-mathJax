@@ -36,7 +36,7 @@ define([ "core/js/adapt" ], function(Adapt) {
 				"processEscapes": true,
 				"autoload": {
 				"color": [],
-				"colorV2": ["color"]
+				"colorv2": ["color"]
 				},
 				"packages": {"[+]": ["noerrors"]}
 			},
